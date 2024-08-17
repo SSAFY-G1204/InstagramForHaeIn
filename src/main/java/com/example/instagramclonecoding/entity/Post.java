@@ -1,12 +1,18 @@
-package com.example.instagramclonecoding.Entity;
+package com.example.instagramclonecoding.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@Getter
+@NoArgsConstructor(access= AccessLevel.PROTECTED) //기본생성자
+@AllArgsConstructor // 모든 필드를 초기화하는 생성자
+@Builder // 빌더 패턴
 @Table(name = "posts")
 public class Post {
 
@@ -26,7 +32,7 @@ public class Post {
 
     //등록일
     @Column(nullable = false)
-    private Date rgtDate;
+    private String rgtDate;
 
     //유저키
     @OneToMany(mappedBy ="post")
@@ -40,5 +46,12 @@ public class Post {
     @OneToMany(mappedBy = "post")
     @Column(nullable=false)
     private List<Media> medias = new ArrayList<Media>();
+
+
+    //JsonIgnore은 가져오지 않게 한거임 Post 조회할때..
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId")
+    @JsonIgnore
+    private User user;
 
 }
