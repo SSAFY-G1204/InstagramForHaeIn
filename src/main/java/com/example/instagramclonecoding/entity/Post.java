@@ -1,5 +1,6 @@
 package com.example.instagramclonecoding.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -46,8 +47,11 @@ public class Post {
     @Column(nullable=false)
     private List<Media> medias = new ArrayList<Media>();
 
-    @ManyToOne
+
+    //JsonIgnore은 가져오지 않게 한거임 Post 조회할때..
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
+    @JsonIgnore
     private User user;
 
 }

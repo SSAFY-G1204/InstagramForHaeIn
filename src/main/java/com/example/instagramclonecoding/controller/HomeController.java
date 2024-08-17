@@ -25,7 +25,7 @@ public class HomeController {
 
     //내가 팔로잉 하는 사람의 post 객체 찾기
     @GetMapping("/feeds")
-    public List<Optional<Post>> GetMyFeed(@RequestParam long userId){
+    public List<Post> GetMyFeed(@RequestParam long userId){
         return postService.findFolollowingPostsByUserId(userId);
     }
 

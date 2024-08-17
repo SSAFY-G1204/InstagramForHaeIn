@@ -21,21 +21,24 @@ public class PostService {
     @Autowired
     private RelationRepository relationRepository;
 
-    public Optional<Post> findByUserId(Long userId) {
+    public List<Post> findByUserId(Long userId) {
+        //System.out.print(postRepository.findByUserUserId(userId).toString());
         return postRepository.findByUserUserId(userId);
     }
 
     // 사용자가 팔로잉 한 사람들이 작성한 포스트들을 찾는 메서드
-    public List<Optional<Post>> findFolollowingPostsByUserId(Long userId) {
+    public List<Post> findFolollowingPostsByUserId(Long userId) {
 
         // 관계 테이블에서 내가 파리미터로 준 userId를 follower로 두고 있는 관계들을 찾는다.
         List<Relation> relations = relationRepository.findRelationByFollowerId(userId);
         // 사용자에게 내보내줄 객체 만들고
-        List<Optional<Post>> posts = new ArrayList<Optional<Post>>();
+        List<Post> posts = new ArrayList<Post>();
         // relation 관계에서 userId찾고 찾은 userId 기반으로 post 객체들을 찾는다.
+        System.out.println("사이즈 : "+relations.size());
+
         for( int idx = 0 ; idx<relations.size(); idx++){
-            Optional<Post> tgtpost = findByUserId(relations.get(0).getUsers().getUserId());
-            posts.add(tgtpost);
+            List<Post> tgtpost = findByUserId(relations.get(idx).getUsers().getUserId());
+            posts.addAll(tgtpost);
         }
         return posts;
     }
