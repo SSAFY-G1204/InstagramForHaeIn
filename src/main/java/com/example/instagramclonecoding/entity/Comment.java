@@ -1,10 +1,15 @@
-package com.example.instagramclonecoding.Entity;
+package com.example.instagramclonecoding.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
+@Getter
+@NoArgsConstructor(access= AccessLevel.PROTECTED) //기본생성자
+@AllArgsConstructor // 모든 필드를 초기화하는 생성자
+@Builder // 빌더 패턴
 @Table(name = "comments")
 public class Comment {
     @Id

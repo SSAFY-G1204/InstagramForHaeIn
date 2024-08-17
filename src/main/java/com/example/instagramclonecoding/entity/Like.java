@@ -1,8 +1,13 @@
-package com.example.instagramclonecoding.Entity;
+package com.example.instagramclonecoding.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Getter
+@NoArgsConstructor(access= AccessLevel.PROTECTED) //기본생성자
+@AllArgsConstructor // 모든 필드를 초기화하는 생성자
+@Builder // 빌더 패턴
 @Table(name = "likes")
 public class Like {
 
@@ -16,6 +21,7 @@ public class Like {
     @ManyToOne
     @JoinColumn(name = "postId")
     private Post post;
+
 
 //    @ManyToOne
 //    @Column(nullable = false)
